@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  title: E-commerce API
+  description: API REST pour la gestion des utilisateurs et des produits
+  version: 1.0.0
+  contact:
+    name: Support API
+    email: support@example.com
+
+servers:
+  - url: http://localhost:5001/api
+    description: Serveur de développement
+
+paths:
+  /users:
+    get:
+      summary: Récupérer tous les utilisateurs
+      description: Retourne la liste des utilisateurs enregistrés.
+      operationId: getUsers
+      tags:
+        - Utilisateurs
+      responses:
+        "200":
+          description: Liste des utilisateurs récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          description: Erreur serveur
+
+    post:
+      summary: Créer un nouvel utilisateur
+      description: Ajoute un nouvel utilisateur à la base de données.
+      operationId: createUser
+      tags:
+        - Utilisateurs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "201":
+          description: Utilisateur créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Données invalides fournies
+
+  /users/{id}:
+    get:
+      summary: Récupérer un utilisateur par ID
+      description: Retourne un utilisateur spécifique en fonction de son ID.
+      operationId: getUserById
+      tags:
+        - Utilisateurs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de l'utilisateur
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Utilisateur trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Utilisateur non trouvé
+
+  /products:
+    get:
+      summary: Récupérer tous les produits
+      description: Retourne la liste de tous les produits.
+      operationId: getProducts
+      tags:
+        - Produits
+      responses:
+        "200":
+          description: Liste des produits récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Erreur serveur
+
+    post:
+      summary: Ajouter un produit
+      description: Crée un nouveau produit.
+      operationId: createProduct
+      tags:
+        - Produits
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "201":
+          description: Produit créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Données invalides fournies
+
+  /products/{id}:
+    get:
+      summary: Récupérer un produit par ID
+      description: Retourne un produit spécifique.
+      operationId: getProductById
+      tags:
+        - Produits
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID du produit
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Produit trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Produit non trouvé
+    patch:
+      summary: Mettre à jour un produit
+      description: Met à jour un produit existant avec les nouvelles informations fournies.
+      operationId: updateProduct
+      tags:
+        - Produits
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID du produit à mettre à jour
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "200":
+          description: Produit mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Données invalides fournies
+        "404":
+          description: Produit non trouvé
+
+    delete:
+      summary: Supprimer un produit
+      description: Supprime un produit spécifique de la base de données.
+      operationId: deleteProduct
+      tags:
+        - Produits
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID du produit à supprimer
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Produit supprimé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Produit supprimé avec succès"
+        "404":
+          description: Produit non trouvé
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+          format: float
+
+    ProductInput:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+          format: float
