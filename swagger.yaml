@@ -76,6 +76,36 @@ paths:
                 $ref: "#/components/schemas/User"
         "404":
           description: Utilisateur non trouvé
+    delete:
+      summary: Supprimer un utilisateur
+      description: Permet de supprimer un utilisateur en fonction de son ID.
+      operationId: deleteUser
+      tags:
+        - Utilisateurs
+      parameters:
+        - name: id
+          in: path
+          description: L'ID de l'utilisateur à supprimer
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Utilisateur supprimé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Utilisateur supprimé avec succès"
+        '400':
+          description: Mauvaise requête (par exemple, ID mal formé)
+        '404':
+          description: Utilisateur non trouvé
+        '500':
+          description: Erreur serveur
 
   /products:
     get:

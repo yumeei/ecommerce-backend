@@ -30,7 +30,7 @@ router.get('/users/:id', async (req, res) => {
 router.post('/users', async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
-    return res.status(400).json({ message: 'Le nom, l\'email et le mot de passe sont requis.' });
+    return res.status(400).json({ message: 'Tous les champs (name, email, password) sont requis.' });
   }
 
   const existingUser = await User.findOne({ email });
@@ -54,5 +54,26 @@ router.post('/users', async (req, res) => {
     res.status(400).json({ message: 'Erreur lors de la création de l\'utilisateur', error: err.message });
   }
 });
+
+router.delete('/users/:id', async (req, res) => {
+  try {
+    // if (req.user.id !== req.params.id) {
+    //   return res.status(403).json({ message: "Vous n'êtes pas autorisé à supprimer cet utilisateur" });
+    // }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+
+    return res.status(200).json({ message: "Utilisateur supprimé avec succès" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
 
 export default router;
