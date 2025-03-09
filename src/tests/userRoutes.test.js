@@ -21,8 +21,8 @@ describe("Tests sur les utilisateurs", () => {
 
   it("Devrait créer un utilisateur", async () => {
     const newUser = {
-      name: "test4",
-      email: "test4@example.com",
+      name: "test user",
+      email: "test@example.com",
       password: "test"
     };
     const res = await request(app).post("/api/users").send(newUser);
