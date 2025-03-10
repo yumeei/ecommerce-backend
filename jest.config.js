@@ -1,4 +1,6 @@
-export const transform = {
-  '^.+\\.[t|j]sx?$': 'babel-jest',
+module.exports = {
+  transform: {
+    '^.+\\.[t|j]sx?$': 'babel-jest',
+  },
+  testEnvironment: 'node',
 };
-export const testEnvironment = 'node';
