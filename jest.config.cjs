@@ -3,5 +3,5 @@ module.exports = {
     '^.+\\.[t|j]sx?$': 'babel-jest',
   },
   testEnvironment: 'node',
-  extensionsToTreatAsEsm: ['.ts', '.tsx', '.js'],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
 };
