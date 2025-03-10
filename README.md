@@ -1,7 +1,7 @@
 Ecommerce Backend
 Le backend de ce projet est une API RESTful permettant de gérer un site e-commerce. Il utilise Node.js avec Express pour gérer les requêtes HTTP, MongoDB comme base de données, et Jest pour les tests unitaires.
 
-Table des matières
+Table des matières<br>
 Technologies
 Installation
 Configuration
