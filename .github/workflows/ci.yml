@@ -12,9 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      MONGO_URI: mongodb://localhost:27017/ecommerceDB
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -28,6 +25,8 @@ jobs:
       run: npm install
 
     - name: Run tests
+      env:
+        MONGO_URI: mongodb://localhost:27017/ecommerceDB
       run: |
         for test in $(find ./src/tests -name "*.test.js"); do
           echo "Running test file: $test"
